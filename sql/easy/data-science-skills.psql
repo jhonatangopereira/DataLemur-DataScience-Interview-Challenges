@@ -12,8 +12,9 @@
 SELECT c.candidate_id  -- Main query to return the candidate IDs.
 FROM candidates AS c
 WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')  -- Filter for candidates with this skills.
-GROUP BY c.candidate_id  -- GROUP BY for candidate_ids.
-HAVING COUNT(*) = 3;  -- If the candidate_ids has the three skills speciefied in question.
+GROUP BY c.candidate_id  -- Group by for candidate_ids.
+HAVING COUNT(*) = 3  -- If the candidate_ids has the three skills speciefied in question.
+ORDER BY c.candidate_id ASC;  -- Order by candidate ID in ascending order.
 
 
 -- Explanation:
