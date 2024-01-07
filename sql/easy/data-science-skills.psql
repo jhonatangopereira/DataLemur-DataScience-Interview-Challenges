@@ -1,0 +1,29 @@
+-- Solution based on: https://datalemur.com/questions/matching-skills
+
+-- Question:
+--   Given a table of candidates and their skills, you're tasked with finding the
+--    candidates best suited for an open Data Science job. You want to find candidates
+--    who are proficient in Python, Tableau, and PostgreSQL.
+--   Write a query to list the candidates who possess all of the required skills
+--    for the job. Sort the output by candidate ID in ascending order.
+
+
+-- My solution:
+SELECT c.candidate_id  -- Main query to return the candidate IDs.
+FROM candidates AS c
+WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')  -- Filter for candidates with this skills.
+GROUP BY c.candidate_id  -- GROUP BY for candidate_ids.
+HAVING COUNT(*) = 3;  -- If the candidate_ids has the three skills speciefied in question.
+
+
+-- Explanation:
+--   The idea of this solution is simple. First, we need to filter the skills for
+--    Python, Tableau and PostgreSQL in WHERE clause. With this, we have only the rows
+--    that has some of this skills.
+--   After this, we need to group the candidates to aggregate the table and obtain the count.
+--    With the count, we just need to specified in HAVING clause, used with GROUP BY to filter
+--    for candidate_ids that repeat 3 times.
+--   We assume that it doesn't make sense for the table to have repeated skills for candidates.
+
+-- Future:
+--   No comments.
