@@ -1,0 +1,24 @@
+-- Solution based on: https://datalemur.com/questions/sql-page-with-no-likes
+
+-- Question:
+--   Assume you're given two tables containing data about Facebook Pages and their
+--    respective likes (as in "Like a Facebook Page").
+--   Write a query to return the IDs of the Facebook pages that have zero likes.
+--    The output should be sorted in ascending order based on the page IDs.
+
+-- My solution:
+SELECT pg.page_id  -- Main query to return the candidate IDs.
+FROM pages AS pg
+WHERE pg.page_id NOT IN (  -- WHERE clause to filter page_ids that doesn't contains in page_likes table.
+    SELECT pgl.page_id
+    FROM page_likes AS pgl
+);
+
+
+-- Explanation:
+--   The idea of this solution is to select all page_ids in pages table
+--    that don't contain in page_likes table. So, we have the pages
+--    that haven't likes.
+
+-- Future:
+--   No comments.
