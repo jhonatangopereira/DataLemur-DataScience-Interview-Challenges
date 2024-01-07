@@ -1,0 +1,34 @@
+-- Solution based on: https://datalemur.com/questions/sql-histogram-tweets
+
+-- Question:
+--   Assume you're given a table Twitter tweet data, write a query to obtain a
+--    histogram of tweets posted per user in 2022. Output the tweet count per user
+--    as the bucket and the number of Twitter users who fall into that bucket.
+--   In other words, group the users by the number of tweets they posted in 2022
+--    and count the number of users in each group.
+
+
+-- My solution:
+WITH UserCounter AS (  -- Using WITH to divide the complexity of the main query.
+    SELECT (  -- This SELECT is used to count every unique user_id.
+        COUNT(*)  -- COUNT to get the quantity of each user_id contained in table.
+    ) FROM tweets AS t
+    WHERE EXTRACT(YEAR FROM t.tweet_date) = 2022  -- Verify if the year is 2022.
+    GROUP BY t.user_id  -- GROUP BY each user_id.
+)
+
+SELECT  -- This is the main query.
+    c.count AS tweet_bucket,  -- Quantity of tweets.
+    COUNT(*) AS users_num  -- Number of users that posted the same number of tweets.
+FROM UserCounter AS c  -- UserCounter refers to WITH clause.
+GROUP BY c.count;  -- GROUP BY each unique element in UserCounter.
+
+
+-- Explanation:
+--   The idea of this solution is divided in two parts. First, we need to think about
+--    count the number of unique users and verify the condition passed in question.
+--   After this, we can search for the number of tweets posted and relate to the
+--    number of tweets posted with other GROUP BY clause.
+
+-- Future:
+--   Make sure that is necessary to create two GROUP BY's.
