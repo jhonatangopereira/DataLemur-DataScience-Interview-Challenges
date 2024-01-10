@@ -1,0 +1,20 @@
+-- Solution based on: https://datalemur.com/questions/tesla-unfinished-parts
+
+-- Question:
+--   Tesla is investigating production bottlenecks and they need your help to extract
+--    the relevant data. Write a query to determine which parts have begun the assembly process but are not yet finished.
+--   This question is straightforward, so let's approach it with simplicity in both
+--    thinking and solution.
+
+
+-- My solution:
+SELECT pa.part, pa.assembly_step  -- Select the columns that we need.
+FROM parts_assembly AS pa  -- Select the table that we need.
+WHERE pa.finish_date IS NULL;  -- Filter for the rows that has NULL in finish_date column.
+
+
+-- Explanation:
+--   We need to return all the rows that have NULL in finish_date column. So, to do
+--    that we need to filter using WHERE and IS NULL clauses.
+-- Future:
+--   No comments.
