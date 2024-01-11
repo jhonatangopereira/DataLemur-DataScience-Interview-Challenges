@@ -1,0 +1,32 @@
+-- Solution based on: https://datalemur.com/questions/sql-histogram-tweets
+
+-- Question:
+--   Assume you're given a table Twitter tweet data, write a query to obtain a
+--    histogram of tweets posted per user in 2022. Output the tweet count per user
+--    as the bucket and the number of Twitter users who fall into that bucket.
+--   In other words, group the users by the number of tweets they posted in 2022
+--    and count the number of users in each group.
+
+-- My solution:
+SELECT 
+    (
+        -- Select the count of rows from the 'viewership' table where the device_type is 'laptop'
+        SELECT COUNT(*) FROM viewership WHERE device_type = 'laptop'
+    ) AS laptop_views,
+    (
+        -- Select the count of rows from the 'viewership' table where the device_type is either 'tablet' or 'phone'
+        SELECT COUNT(*) FROM viewership WHERE device_type in ('tablet', 'phone')
+    ) AS mobile_views;
+
+-- Explanation:
+--   The first SELECT statement is a subquery that returns the count of rows from the viewership table where the device_type is 'laptop'.
+--   The second SELECT statement is a subquery that returns the count of rows from the viewership table where the device_type is either 'tablet' or 'phone'.
+--   The two subqueries are separated by a comma, which means that they are two separate columns in the final result set.
+
+-- Future:
+--   The subqueries can be replaced with a CASE statement, which is more efficient.
+--   For example:
+SELECT 
+    SUM(CASE WHEN device_type = 'laptop' THEN 1 ELSE 0 END) AS laptop_views,
+    SUM(CASE WHEN device_type in ('tablet', 'phone') THEN 1 ELSE 0 END) AS mobile_views
+FROM viewership;
